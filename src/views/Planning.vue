@@ -1,23 +1,22 @@
-<template>
-  <div class="planning">
-    <Calendar/>      
-    <AddForm/>
+﻿<template>
+  <div id="planning" class="planning">
+    <TodosTable />
+    <AddForm />
   </div>
 </template>
 
 <script>
-import AddForm from '@/components/AddForm.vue'
-import Calendar from '@/components/Calendar.vue'
+import TodosTable from "@/components/TodosTable.vue";
+import AddForm from "@/components/AddForm.vue";
 
 export default {
   components: {
+    TodosTable,
     AddForm,
-    Calendar,
   },
-
+  name: "Planning",
   data() {
-    return {
-    }
+    return {};
   },
-}
+};
 </script>
