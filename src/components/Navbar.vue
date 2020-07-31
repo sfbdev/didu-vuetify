@@ -15,7 +15,7 @@
     </v-navigation-drawer>
     <v-app-bar app color="success" dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Application</v-toolbar-title>
+      <v-toolbar-title>Görev Takip v1.0.0</v-toolbar-title>
     </v-app-bar>
   </div>
 </template>

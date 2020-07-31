@@ -9,19 +9,19 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: 'Anasayfa',
     icon: 'dashboard',
     component: Home,
   },
   {
     path: '/calendar',
-    name: 'Calendar',
+    name: 'Takvim',
     icon: 'event',
     component: Calendar,
   },
   {
     path: '/planning',
-    name: 'Planning',
+    name: 'Planlayıcı',
     icon: 'settings',
     component: Planning,
   }

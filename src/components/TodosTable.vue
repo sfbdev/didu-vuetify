@@ -1,21 +1,33 @@
 ﻿<template>
-  <v-data-table :headers="tableHeader" :items="allTodos" sort-by="date" class="elevation-1">
-    <template v-slot:top>
-      <v-toolbar flat color="white">
-        <v-toolbar-title>All Todos</v-toolbar-title>
-      </v-toolbar>
+  <v-simple-table>
+    <template v-slot:default>
+      <thead>
+        <tr>
+          <th>Görev</th>
+          <th>Tarih</th>
+          <th>Kategori</th>
+          <th>Öncelik</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="text-left" v-for="todo in data" :key="todo.id">
+          <td>{{ todo.text }}</td>
+          <td>{{ todo.date }}</td>
+          <td>{{ todo.category }}</td>
+          <td>{{ todo.priority }}</td>
+        </tr>
+      </tbody>
     </template>
-  </v-data-table>
+  </v-simple-table>
 </template>
 
 <script>
 import { mapActions, mapState, mapGetters } from "vuex";
 
 export default {
+  props: ["type"],
   data() {
-    return{
-
-    }
+    return {};
   },
 
   computed: {
@@ -23,6 +35,24 @@ export default {
       allTodos: "todos",
       tableHeader: "header",
     }),
+    data() {
+      return this.type == "done"
+        ? this.doneTodos
+        : this.type == "undone"
+        ? this.undoneTodos
+        : this.allTodos;
+    },
+
+    doneTodos() {
+      return this.allTodos.filter((item) => {
+        return item.done == true;
+      });
+    },
+    undoneTodos() {
+      return this.allTodos.filter((item) => {
+        return item.done != true;
+      });
+    },
   },
 
   watch: {},

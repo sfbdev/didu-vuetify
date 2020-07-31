@@ -31,6 +31,7 @@ export default new Vuex.Store({
       {
         id: 0,
         text: 'Çocuklar okuldan alınacak.',
+        description: '',
         date: "08/16 10:00",
         done: false,
         category: "İş",
@@ -39,6 +40,7 @@ export default new Vuex.Store({
       {
         id: 1,
         text: 'Markete gitmek için liste hazırlanacak.',
+        description:  '',
         date: "08/03 05:10",
         done: false,
         category: "Okul",
@@ -47,6 +49,7 @@ export default new Vuex.Store({
       {
         id: 2,
         text: 'Toplantı notları çıkartılacak.',
+        description: '',
         date: "07/18 15:10",
         done: true,
         category: "Kişisel Gelişim",
@@ -55,6 +58,7 @@ export default new Vuex.Store({
       {
         id: 3,
         text: 'Vue için hazırlanan makaleler okunacak.',
+        description: '',
         date: "08/09 14:00",
         done: false,
         category: "Hobi",
@@ -63,8 +67,15 @@ export default new Vuex.Store({
     ]
   },
   mutations: {
+    SAVE_TODO(state, payload){
+      state.todos.unshift(payload)
+
+    }
   },
   actions: {
+    saveTodo({ commit }, payload){
+      commit("SAVE_TODO", payload)
+    }
   },
   modules: {
   },

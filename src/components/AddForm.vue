@@ -1,21 +1,25 @@
 ﻿<template>
   <div>
-    <v-btn bottom color="pink" dark fab fixed right @click="dialog = !dialog">
+    <v-btn bottom color="pink" dark fab fixed right @click="openForm = !openForm">
       <v-icon>mdi-plus</v-icon>
     </v-btn>
-    <v-dialog v-model="dialog" width="800px">
+    <v-dialog v-model="openForm" width="800px">
       <v-card>
         <v-card-title class="success white--text">Yeni Görev Ekle</v-card-title>
         <v-container>
           <v-row class="mx-2">
             <v-col class="align-center justify-space-between" cols="12">
-              <v-text-field prepend-icon="rate_review" placeholder="Görev Giriniz"></v-text-field>
+              <v-text-field
+                v-model="newTodo.text"
+                prepend-icon="rate_review"
+                placeholder="Görev Giriniz"
+              ></v-text-field>
             </v-col>
 
             <v-col cols="12" lg="6">
               <v-menu
-                ref="menu1"
-                v-model="menu1"
+                ref="openDatePicker"
+                v-model="openDatePicker"
                 :close-on-content-click="false"
                 transition="scale-transition"
                 offset-y
@@ -24,6 +28,7 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
+                    v-model="newTodo.date"
                     label="Tarih"
                     persistent-hint
                     prepend-icon="event"
@@ -31,18 +36,27 @@
                     v-on="on"
                   ></v-text-field>
                 </template>
-                <v-date-picker v-model="date" no-title @input="menu1 = false"></v-date-picker>
+                <v-date-picker v-model="newTodo.date" no-title @input="openDatePicker = false"></v-date-picker>
               </v-menu>
             </v-col>
             <v-col cols="12" lg="6">
-              <v-select :items="items" label="Kategori" prepend-icon="category"></v-select>
+              <v-select
+                v-model="newTodo.category"
+                :items="items"
+                label="Kategori"
+                prepend-icon="category"
+              ></v-select>
             </v-col>
             <v-col cols="12">
-              <v-textarea prepend-icon="mdi-text" placeholder="Not Giriniz"></v-textarea>
+              <v-textarea
+                v-model="newTodo.description"
+                prepend-icon="mdi-text"
+                placeholder="Not Giriniz"
+              ></v-textarea>
             </v-col>
             <v-col cols="12">
               <v-slider
-                v-model="slider"
+                v-model="newTodo.priority"
                 class="align-center"
                 prepend-icon="thumb_down"
                 append-icon="thumb_up"
@@ -57,8 +71,8 @@
         <v-card-actions>
           <v-btn text color="primary">More</v-btn>
           <v-spacer></v-spacer>
-          <v-btn text color="primary" @click="dialog = false">Cancel</v-btn>
-          <v-btn text @click="dialog = false">Save</v-btn>
+          <v-btn text color="primary" @click="openForm = false">Cancel</v-btn>
+          <v-btn text @click="trySaveTodo()">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -67,30 +81,30 @@
 
 
 <script>
+import { mapActions, mapGetters } from "vuex";
+
 export default {
   data() {
     return {
-      dialog: false,
-      date: new Date().toISOString().substr(0, 10),
-      menu1: false,
-      menu2: false,
+      openForm: false,
       items: ["Okul", "İş", "Hobi", "Sosyal"],
+      openDatePicker: null,
+      newTodo: {
+        text: null,
+        description: null,
+        date: new Date().toISOString().substr(0, 10),
+        done: false,
+        category: null,
+        priority: null,
+      },
     };
   },
   computed: {},
 
   methods: {
-    formatDate(date) {
-      if (!date) return null;
-
-      const [year, month, day] = date.split("-");
-      return `${month}/${day}/${year}`;
-    },
-    parseDate(date) {
-      if (!date) return null;
-
-      const [month, day, year] = date.split("/");
-      return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+    ...mapActions(["saveTodo"]),
+    trySaveTodo() {
+      this.saveTodo(this.newTodo);
     },
   },
 };
