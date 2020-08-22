@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapGetters } from "vuex";
+import { , mapState, mapGetters } from "vuex";
 
 export default {
   props: ["type"],
